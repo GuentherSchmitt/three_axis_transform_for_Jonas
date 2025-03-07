@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'axis_slider.dart';
@@ -38,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double angleZ = 0;
   double moveX = 0;
   double moveY = 0;
+  double shearX = 0;
 
 
   @override
@@ -46,12 +49,16 @@ class _MyHomePageState extends State<MyHomePage> {
   mTranslate.setEntry(0, 3, moveX * 20);
   mTranslate.setEntry(1, 3, moveY * 20);
 
+  var mShear = Matrix4.identity();
+  mTranslate.setEntry(0, 1, tan(shearX));
+
   var mTransform = Matrix4.identity();
 
   mTransform.multiply(Matrix4.rotationX(angleX));
   mTransform.multiply(Matrix4.rotationY(angleY));
   mTransform.multiply(Matrix4.rotationZ(angleZ));
   mTransform.multiply(mTranslate);
+  mTransform.multiply(mShear);
 
 
     return Scaffold(
@@ -138,6 +145,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
+            AxisSlider(
+              title: "shearX",
+              color: Colors.grey,
+              angle: shearX,
+              callback: (value) {
+                setState(() {
+                  shearX = value;
+                });
+              },
+            ),
             ElevatedButton(
                 onPressed: () {
                   setState(() {
@@ -146,6 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     angleZ = 0;
                     moveX = 0;
                     moveY = 0;
+                    shearX = 0;
                   });
                 },
                 child: const Text("Reset")),
