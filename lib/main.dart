@@ -37,12 +37,14 @@ class _MyHomePageState extends State<MyHomePage> {
   double angleY = 0;
   double angleZ = 0;
   double moveX = 0;
+  double moveY = 0;
 
 
   @override
   Widget build(BuildContext context) {
   var mTranslate = Matrix4.identity();
   mTranslate.setEntry(0, 3, moveX * 20);
+  mTranslate.setEntry(1, 3, moveY * 20);
 
   var mTransform = Matrix4.identity();
 
@@ -126,6 +128,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
+            AxisSlider(
+              title: "moveY",
+              color: Colors.orange,
+              angle: moveY,
+              callback: (value) {
+                setState(() {
+                  moveY = value;
+                });
+              },
+            ),
             ElevatedButton(
                 onPressed: () {
                   setState(() {
@@ -133,6 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     angleY = 0;
                     angleZ = 0;
                     moveX = 0;
+                    moveY = 0;
                   });
                 },
                 child: const Text("Reset")),
