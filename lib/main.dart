@@ -50,13 +50,14 @@ class _MyHomePageState extends State<MyHomePage> {
   mTranslate.setEntry(1, 3, moveY * 20);
 
   var mShear = Matrix4.identity();
-  mTranslate.setEntry(0, 1, tan(shearX));
+  mShear.setEntry(0, 1, tan(shearX));
 
   var mTransform = Matrix4.identity();
 
   mTransform.multiply(Matrix4.rotationX(angleX));
   mTransform.multiply(Matrix4.rotationY(angleY));
   mTransform.multiply(Matrix4.rotationZ(angleZ));
+
   mTransform.multiply(mTranslate);
   mTransform.multiply(mShear);
 
